@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLost</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">LifeLost</h1>
+        <p class="text-center">Visualize your life in months</p>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ageInput">Enter your age:</label>
+                    <input type="number" id="ageInput" class="form-control" placeholder="Enter your age">
+                </div>
+                <button id="generateBtn" class="btn btn-primary btn-block">Generate</button>
+            </div>
+        </div>
+        <div id="visualization" class="mt-5"></div>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
