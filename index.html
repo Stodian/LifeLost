@@ -5,10 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeLost</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body, html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        #lifeCanvas {
+            display: block;
+            margin-left: 24%;
+            margin-top: 2%;
+        }
+
+        .left-column {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20%;
+            padding: 20px;
+            background-color: #f8f9fa;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .content {
+            margin-left: 20%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="left-column">
+        <h4>Additional Information</h4>
+        <form>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="marriedCheck">
+                <label class="form-check-label" for="marriedCheck">Married?</label>
+            </div>
+            <div class="form-group">
+                <label for="kidsInput">Time spent with kids (hours per week):</label>
+                <input type="number" id="kidsInput" class="form-control" placeholder="Enter hours">
+            </div>
+            <div class="form-group">
+                <label for="workInput">Time spent working (hours per week):</label>
+                <input type="number" id="workInput" class="form-control" placeholder="Enter hours">
+            </div>
+            <div class="form-group">
+                <label for="exerciseInput">Time spent exercising (hours per week):</label>
+                <input type="number" id="exerciseInput" class="form-control" placeholder="Enter hours">
+            </div>
+        </form>
+    </div>
+    <div class="container mt-5 content">
         <h1 class="text-center">LifeLost</h1>
         <p class="text-center">Visualize your life in months</p>
         <div class="row justify-content-center">
@@ -17,10 +64,13 @@
                     <label for="ageInput">Enter your age:</label>
                     <input type="number" id="ageInput" class="form-control" placeholder="Enter your age">
                 </div>
-                <button id="generateBtn" class="btn btn-primary btn-block">Generate</button>
+                <button id="generateBtn" class="btn btn-primary btn-block" style="background-color: #800000; border-color: #800000;">Generate</button>
             </div>
         </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-12 text-center">
                 <canvas id="lifeCanvas" width="1200" height="900"></canvas>
+            </div>
         </div>
     </div>
 

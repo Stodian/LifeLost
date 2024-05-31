@@ -1,6 +1,15 @@
 const canvas = document.getElementById('lifeCanvas');
 const ctx = canvas.getContext('2d');
 
+const scale = window.devicePixelRatio; // Get the device pixel ratio
+canvas.width = 1200 * scale; // Scale the canvas width
+canvas.height = 900 * scale; // Scale the canvas height
+ctx.scale(scale, scale); // Scale the context to ensure the drawing operations are scaled
+
+// Set the display size of the canvas
+canvas.style.width = '1200px';
+canvas.style.height = '900px';
+
 const circleRadius = 6;
 const circleDiameter = circleRadius * 2;
 const padding = 4;
@@ -48,16 +57,10 @@ function drawLifeInMonths() {
 }
 
 function drawLabels() {
-    drawLabel('Birth', 5, 15, '#0000FF');
-    drawLabel('30th Birthday', 5, 130, '#008080');
-    drawLabel('60th Birthday', 5, 245, '#8B0000');
-    drawLabel('Turning 90', 5, 720, '#800080');
-    ctx.strokeStyle = '#FFA500';
-    ctx.beginPath();
-    ctx.moveTo(0, 770);
-    ctx.lineTo(780, 770);
-    ctx.stroke();
-    drawLabel('Each row is 36 months = 3 years', 180, 790, '#FFA500');
+    drawLabel('', 5, 15, '#0000FF');
+    drawLabel('', 5, 130, '#008080');
+    drawLabel('', 5, 245, '#8B0000');
+    drawLabel('', 5, 720, '#800080');
 }
 
 drawLifeInMonths();
