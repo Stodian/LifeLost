@@ -1,20 +1,27 @@
+
 #visualization {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: center; /* Center the circles */
+    padding: 20px; /* Add padding for better spacing */
+    margin-top: 20px; /* Margin to separate from other elements */
 }
 
+/* Individual circle styling */
 .circle {
-    width: 10px;
-    height: 10px;
-    margin: 1px;
-    border-radius: 50%;
+    width: 15px; /* Slightly larger for better visibility */
+    height: 15px; /* Consistent size with width */
+    margin: 2px; /* Slightly larger margin for clearer separation */
+    border-radius: 50%; /* Perfectly round circles */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for a modern look */
 }
 
+/* Styling for lived months with a more accessible color */
 .lived {
-    background-color: green;
+    background-color: #28a745; /* Bootstrap success green */
 }
 
+/* Styling for remaining months with better contrast */
 .remaining {
-    background-color: lightgray;
+    background-color: #ced4da; /* Bootstrap secondary light grey */
 }
