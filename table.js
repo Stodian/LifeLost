@@ -30,14 +30,25 @@ function drawCircle(x, y, color, fill = true) {
     ctx.closePath();
 }
 
-function drawLabel(text, x, y, color) {
-    ctx.fillStyle = color;
-    ctx.font = '12px Arial';
-    ctx.fillText(text, x, y);
+function drawLabel(text, color) {
+    const keyContainer = document.getElementById('keyContainer');
+    const keyItem = document.createElement('div');
+    keyItem.className = 'key-item';
+
+    const colorBox = document.createElement('div');
+    colorBox.className = 'color-box';
+    colorBox.style.backgroundColor = color;
+
+    const labelText = document.createElement('span');
+    labelText.textContent = text;
+
+    keyItem.appendChild(colorBox);
+    keyItem.appendChild(labelText);
+    keyContainer.appendChild(keyItem);
 }
 
 function drawLifeInMonths() {
-    const age = parseInt(document.getElementById('ageInput').value, 10) || 0;
+    const age = 90; // Age is always 90
     const workHours = parseInt(document.getElementById('workInput').value, 10) || 0;
     const exerciseHours = parseInt(document.getElementById('exerciseInput').value, 10) || 0;
     const readingHours = parseInt(document.getElementById('readingInput').value, 10) || 0;
@@ -93,13 +104,16 @@ function drawLifeInMonths() {
 }
 
 function drawLabels() {
-    drawLabel('Sleep', 5, 15, '#00FFFF');
-    drawLabel('Work', 5, 30, '#FF0000');
-    drawLabel('Exercise', 5, 45, '#00FF00');
-    drawLabel('Reading', 5, 60, '#0000FF');
-    drawLabel('TV', 5, 75, '#FFFF00');
-    drawLabel('Social Media', 5, 90, '#FF00FF');
-    drawLabel('Free Time', 5, 105, '#000000');
+    const keyContainer = document.getElementById('keyContainer');
+    keyContainer.innerHTML = ''; // Clear previous labels
+
+    drawLabel('Sleep', '#00FFFF');
+    drawLabel('Work', '#FF0000');
+    drawLabel('Exercise', '#00FF00');
+    drawLabel('Reading', '#0000FF');
+    drawLabel('TV', '#FFFF00');
+    drawLabel('Social Media', '#FF00FF');
+    drawLabel('Free Time', '#000000');
 }
 
 document.getElementById('generateBtn').addEventListener('click', function() {
