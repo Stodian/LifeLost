@@ -17,11 +17,16 @@ const totalMonths = 90 * 12;
 const columns = 36; // Each row represents 3 years = 36 months
 const rows = Math.ceil(totalMonths / columns);
 
-function drawCircle(x, y, color) {
+function drawCircle(x, y, color, fill = true) {
     ctx.beginPath();
     ctx.arc(x, y, circleRadius, 0, Math.PI * 2);
-    ctx.fillStyle = color;
-    ctx.fill();
+    if (fill) {
+        ctx.fillStyle = color;
+        ctx.fill();
+    } else {
+        ctx.strokeStyle = color;
+        ctx.stroke();
+    }
     ctx.closePath();
 }
 
@@ -32,6 +37,23 @@ function drawLabel(text, x, y, color) {
 }
 
 function drawLifeInMonths() {
+    const age = parseInt(document.getElementById('ageInput').value, 10) || 0;
+    const workHours = parseInt(document.getElementById('workInput').value, 10) || 0;
+    const exerciseHours = parseInt(document.getElementById('exerciseInput').value, 10) || 0;
+    const readingHours = parseInt(document.getElementById('readingInput').value, 10) || 0;
+    const tvHours = parseInt(document.getElementById('tvInput').value, 10) || 0;
+    const socialMediaHours = parseInt(document.getElementById('socialMediaInput').value, 10) || 0;
+    const sleepHours = parseInt(document.getElementById('sleepInput').value, 10) || 0;
+
+    const totalDays = age * 365; // Approximation, ignoring leap years
+    const totalWorkMonths = (workHours * totalDays) / (24 * 30);
+    const totalExerciseMonths = (exerciseHours * totalDays) / (24 * 30);
+    const totalReadingMonths = (readingHours * totalDays) / (24 * 30);
+    const totalTvMonths = (tvHours * totalDays) / (24 * 30);
+    const totalSocialMediaMonths = (socialMediaHours * totalDays) / (24 * 30);
+    const totalSleepMonths = (sleepHours * totalDays) / (24 * 30);
+    const totalActivityMonths = totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths + totalSocialMediaMonths + totalSleepMonths;
+
     let x = circleRadius + padding;
     let y = circleRadius + padding;
     let month = 0;
@@ -41,13 +63,27 @@ function drawLifeInMonths() {
             if (month >= totalMonths) return;
 
             let color = '#000000'; // Default color
+            let fill = true;
 
-            if (month === 0) color = '#0000FF'; // Birth
-            if (month === 30 * 12) color = '#008080'; // 30th Birthday
-            if (month === 60 * 12) color = '#8B0000'; // 60th Birthday
-            if (month === totalMonths - 1) color = '#800080'; // Turning 90
+            if (month < totalSleepMonths) {
+                color = '#00FFFF'; // Sleep time in months
+            } else if (month < totalSleepMonths + totalWorkMonths) {
+                color = '#FF0000'; // Work time in months
+            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths) {
+                color = '#00FF00'; // Exercise time in months
+            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths) {
+                color = '#0000FF'; // Reading time in months
+            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths) {
+                color = '#FFFF00'; // TV time in months
+            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths + totalSocialMediaMonths) {
+                color = '#FF00FF'; // Social Media time in months
+            } else if (month < totalActivityMonths) {
+                color = '#FFA500'; // Other activities
+            } else {
+                fill = false; // Free time
+            }
 
-            drawCircle(x, y, color);
+            drawCircle(x, y, color, fill);
             x += circleDiameter + padding;
             month++;
         }
@@ -57,11 +93,20 @@ function drawLifeInMonths() {
 }
 
 function drawLabels() {
-    drawLabel('', 5, 15, '#0000FF');
-    drawLabel('', 5, 130, '#008080');
-    drawLabel('', 5, 245, '#8B0000');
-    drawLabel('', 5, 720, '#800080');
+    drawLabel('Sleep', 5, 15, '#00FFFF');
+    drawLabel('Work', 5, 30, '#FF0000');
+    drawLabel('Exercise', 5, 45, '#00FF00');
+    drawLabel('Reading', 5, 60, '#0000FF');
+    drawLabel('TV', 5, 75, '#FFFF00');
+    drawLabel('Social Media', 5, 90, '#FF00FF');
+    drawLabel('Free Time', 5, 105, '#000000');
 }
+
+document.getElementById('generateBtn').addEventListener('click', function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    drawLifeInMonths();
+    drawLabels();
+});
 
 drawLifeInMonths();
 drawLabels();
