@@ -45,6 +45,12 @@ function drawLabel(text, color) {
     keyItem.appendChild(colorBox);
     keyItem.appendChild(labelText);
     keyContainer.appendChild(keyItem);
+
+    // Adding animation to the key items
+    setTimeout(() => {
+        keyItem.style.opacity = 1;
+        keyItem.style.transform = 'translateY(0)';
+    }, 100);
 }
 
 function drawLifeInMonths() {
@@ -69,38 +75,44 @@ function drawLifeInMonths() {
     let y = circleRadius + padding;
     let month = 0;
 
-    for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < columns; col++) {
-            if (month >= totalMonths) return;
+    function drawNextCircle() {
+        if (month >= totalMonths) return;
 
-            let color = '#000000'; // Default color
-            let fill = true;
+        let color = '#000000'; // Default color
+        let fill = true;
 
-            if (month < totalSleepMonths) {
-                color = '#00FFFF'; // Sleep time in months
-            } else if (month < totalSleepMonths + totalWorkMonths) {
-                color = '#FF0000'; // Work time in months
-            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths) {
-                color = '#00FF00'; // Exercise time in months
-            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths) {
-                color = '#0000FF'; // Reading time in months
-            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths) {
-                color = '#FFFF00'; // TV time in months
-            } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths + totalSocialMediaMonths) {
-                color = '#FF00FF'; // Social Media time in months
-            } else if (month < totalActivityMonths) {
-                color = '#FFA500'; // Other activities
-            } else {
-                fill = false; // Free time
-            }
-
-            drawCircle(x, y, color, fill);
-            x += circleDiameter + padding;
-            month++;
+        if (month < totalSleepMonths) {
+            color = '#00FFFF'; // Sleep time in months
+        } else if (month < totalSleepMonths + totalWorkMonths) {
+            color = '#FF0000'; // Work time in months
+        } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths) {
+            color = '#00FF00'; // Exercise time in months
+        } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths) {
+            color = '#0000FF'; // Reading time in months
+        } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths) {
+            color = '#FFFF00'; // TV time in months
+        } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths + totalSocialMediaMonths) {
+            color = '#FF00FF'; // Social Media time in months
+        } else if (month < totalActivityMonths) {
+            color = '#FFA500'; // Other activities
+        } else {
+            fill = false; // Free time
         }
-        x = circleRadius + padding;
-        y += circleDiameter + padding;
+
+        drawCircle(x, y, color, fill);
+
+        x += circleDiameter + padding;
+        if ((month + 1) % columns === 0) {
+            x = circleRadius + padding;
+            y += circleDiameter + padding;
+        }
+        month++;
+
+        // Adding animation by drawing the next circle after a short delay
+        setTimeout(drawNextCircle, 10);
     }
+
+    drawNextCircle();
 }
 
 function drawLabels() {
