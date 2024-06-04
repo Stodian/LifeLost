@@ -78,23 +78,23 @@ function drawLifeInMonths() {
     function drawNextCircle() {
         if (month >= totalMonths) return;
 
-        let color = '#000000'; // Default color
+        let color = '#555555'; // Default color
         let fill = true;
 
         if (month < totalSleepMonths) {
-            color = '#00FFFF'; // Sleep time in months
+            color = '#00bcd4'; // Sleep time in months
         } else if (month < totalSleepMonths + totalWorkMonths) {
-            color = '#FF0000'; // Work time in months
+            color = '#f44336'; // Work time in months
         } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths) {
-            color = '#00FF00'; // Exercise time in months
+            color = '#4caf50'; // Exercise time in months
         } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths) {
-            color = '#0000FF'; // Reading time in months
+            color = '#3f51b5'; // Reading time in months
         } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths) {
-            color = '#FFFF00'; // TV time in months
+            color = '#ffeb3b'; // TV time in months
         } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths + totalSocialMediaMonths) {
-            color = '#FF00FF'; // Social Media time in months
+            color = '#9c27b0'; // Social Media time in months
         } else if (month < totalActivityMonths) {
-            color = '#FFA500'; // Other activities
+            color = '#ff9800'; // Other activities
         } else {
             fill = false; // Free time
         }
@@ -119,13 +119,13 @@ function drawLabels() {
     const keyContainer = document.getElementById('keyContainer');
     keyContainer.innerHTML = ''; // Clear previous labels
 
-    drawLabel('Sleep', '#00FFFF');
-    drawLabel('Work', '#FF0000');
-    drawLabel('Exercise', '#00FF00');
-    drawLabel('Reading', '#0000FF');
-    drawLabel('TV', '#FFFF00');
-    drawLabel('Social Media', '#FF00FF');
-    drawLabel('Free Time', '#000000');
+    drawLabel('Sleep', '#00bcd4');
+    drawLabel('Work', '#f44336');
+    drawLabel('Exercise', '#4caf50');
+    drawLabel('Reading', '#3f51b5');
+    drawLabel('TV', '#ffeb3b');
+    drawLabel('Social Media', '#9c27b0');
+    drawLabel('Free Time', '#555555');
 }
 
 document.getElementById('generateBtn').addEventListener('click', function() {

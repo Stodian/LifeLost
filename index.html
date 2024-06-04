@@ -54,6 +54,8 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .color-box {
@@ -147,7 +149,146 @@
         </div>
     </div>
 
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="table.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+        const canvas = document.getElementById('lifeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const scale = window.devicePixelRatio; // Get the device pixel ratio
+        canvas.width = 1200 * scale; // Scale the canvas width
+        canvas.height = 900 * scale; // Scale the canvas height
+        ctx.scale(scale, scale); // Scale the context to ensure the drawing operations are scaled
+
+        // Set the display size of the canvas
+        canvas.style.width = '1200px';
+        canvas.style.height = '900px';
+
+        const circleRadius = 6;
+        const circleDiameter = circleRadius * 2;
+        const padding = 4;
+        const totalMonths = 90 * 12;
+        const columns = 36; // Each row represents 3 years = 36 months
+        const rows = Math.ceil(totalMonths / columns);
+
+        function drawCircle(x, y, color, fill = true) {
+            ctx.beginPath();
+            ctx.arc(x, y, circleRadius, 0, Math.PI * 2);
+            if (fill) {
+                ctx.fillStyle = color;
+                ctx.fill();
+            } else {
+                ctx.strokeStyle = color;
+                ctx.stroke();
+            }
+            ctx.closePath();
+        }
+
+        function drawLabel(text, color) {
+            const keyContainer = document.getElementById('keyContainer');
+            const keyItem = document.createElement('div');
+            keyItem.className = 'key-item';
+
+            const colorBox = document.createElement('div');
+            colorBox.className = 'color-box';
+            colorBox.style.backgroundColor = color;
+
+            const labelText = document.createElement('span');
+            labelText.textContent = text;
+
+            keyItem.appendChild(colorBox);
+            keyItem.appendChild(labelText);
+            keyContainer.appendChild(keyItem);
+
+            // Adding animation to the key items using GSAP
+            gsap.to(keyItem, {opacity: 1, y: 0, duration: 0.5, delay: 0.1});
+        }
+
+        function drawLifeInMonths() {
+            const age = 90; // Age is always 90
+            const workHours = parseInt(document.getElementById('workInput').value, 10) || 0;
+            const exerciseHours = parseInt(document.getElementById('exerciseInput').value, 10) || 0;
+            const readingHours = parseInt(document.getElementById('readingInput').value, 10) || 0;
+            const tvHours = parseInt(document.getElementById('tvInput').value, 10) || 0;
+            const socialMediaHours = parseInt(document.getElementById('socialMediaInput').value, 10) || 0;
+            const sleepHours = parseInt(document.getElementById('sleepInput').value, 10) || 0;
+
+            const totalDays = age * 365; // Approximation, ignoring leap years
+            const totalWorkMonths = (workHours * totalDays) / (24 * 30);
+            const totalExerciseMonths = (exerciseHours * totalDays) / (24 * 30);
+            const totalReadingMonths = (readingHours * totalDays) / (24 * 30);
+            const totalTvMonths = (tvHours * totalDays) / (24 * 30);
+            const totalSocialMediaMonths = (socialMediaHours * totalDays) / (24 * 30);
+            const totalSleepMonths = (sleepHours * totalDays) / (24 * 30);
+            const totalActivityMonths = totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths + totalSocialMediaMonths + totalSleepMonths;
+
+            let x = circleRadius + padding;
+            let y = circleRadius + padding;
+            let month = 0;
+
+            function drawNextCircle() {
+                if (month >= totalMonths) return;
+
+                let color = '#555555'; // Default color
+                let fill = true;
+
+                if (month < totalSleepMonths) {
+                    color = '#00bcd4'; // Sleep time in months
+                } else if (month < totalSleepMonths + totalWorkMonths) {
+                    color = '#f44336'; // Work time in months
+                } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths) {
+                    color = '#4caf50'; // Exercise time in months
+                } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths) {
+                    color = '#3f51b5'; // Reading time in months
+                } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths) {
+                    color = '#ffeb3b'; // TV time in months
+                } else if (month < totalSleepMonths + totalWorkMonths + totalExerciseMonths + totalReadingMonths + totalTvMonths + totalSocialMediaMonths) {
+                    color = '#9c27b0'; // Social Media time in months
+                } else if (month < totalActivityMonths) {
+                    color = '#ff9800'; // Other activities
+                } else {
+                    fill = false; // Free time
+                }
+
+                drawCircle(x, y, color, fill);
+
+                x += circleDiameter + padding;
+                if ((month + 1) % columns === 0) {
+                    x = circleRadius + padding;
+                    y += circleDiameter + padding;
+                }
+                month++;
+
+                // Adding animation to the circles using GSAP
+                gsap.fromTo(canvas, {opacity: 1}, {opacity: 1, duration: 0.5});
+
+                // Adding delay before drawing the next circle
+                setTimeout(drawNextCircle, 10);
+            }
+
+            drawNextCircle();
+        }
+
+        function drawLabels() {
+            const keyContainer = document.getElementById('keyContainer');
+            keyContainer.innerHTML = ''; // Clear previous labels
+
+            drawLabel('Sleep', '#00bcd4');
+            drawLabel('Work', '#f44336');
+            drawLabel('Exercise', '#4caf50');
+            drawLabel('Reading', '#3f51b5');
+            drawLabel('TV', '#ffeb3b');
+            drawLabel('Social Media', '#9c27b0');
+            drawLabel('Free Time', '#555555');
+        }
+
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            drawLifeInMonths();
+            drawLabels();
+        });
+
+        drawLifeInMonths();
+        drawLabels();
+    </script>
 </body>
 </html>
