@@ -10,6 +10,8 @@
             height: 100%;
             overflow-x: hidden;
             overflow-y: hidden;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
         }
 
         #lifeCanvas {
@@ -27,6 +29,7 @@
             background-color: #f8f9fa;
             height: 100%;
             overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         }
 
         .right-column {
@@ -35,9 +38,11 @@
             top: 0;
             width: 20%;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #fff;
             height: 100%;
             overflow-y: auto;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            border-left: 1px solid #dee2e6;
         }
 
         .content {
@@ -55,6 +60,41 @@
             width: 20px;
             height: 20px;
             margin-right: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h4 {
+            font-weight: 600;
+            color: #333;
+        }
+
+        label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+
+        #generateBtn {
+            background-color: #800000;
+            border-color: #800000;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        #generateBtn:hover {
+            background-color: #660000;
+        }
+
+        .key-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -89,7 +129,7 @@
         </form>
     </div>
     <div class="right-column">
-        <h4>Key</h4>
+        <h4 class="key-title">Key</h4>
         <div id="keyContainer"></div>
     </div>
     <div class="container mt-5 content">
@@ -97,7 +137,7 @@
         <p class="text-center">Visualize your life in months</p>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <button id="generateBtn" class="btn btn-primary btn-block" style="background-color: #800000; border-color: #800000;">Generate</button>
+                <button id="generateBtn" class="btn btn-primary btn-block">Generate</button>
             </div>
         </div>
         <div class="row justify-content-center mt-4">
