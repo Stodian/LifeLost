@@ -22,6 +22,5 @@ LifeLost is a web application that generates a visual representation of the mont
 ## Technologies Used
 
 - **Frontend:** Bootstrap, HTML, CSS, JavaScript
-- **Visualization:** D3.js for generating the grid of circles
 - **Backend:** Node.js for handling complex calculations
 
